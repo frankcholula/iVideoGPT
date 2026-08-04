@@ -857,9 +857,12 @@ def start_train():
     if args.output_dir is not None:
         accelerator.wait_for_everyone()
         unwrapped_model = accelerator.unwrap_model(model)
-        unwrapped_model.save_pretrained(
-            args.output_dir, is_main_process=accelerator.is_main_process, save_function=accelerator.save
-        )
+        if hasattr(unwrapped_model, "save_pretrained"):
+            unwrapped_model.save_pretrained(
+                args.output_dir, is_main_process=accelerator.is_main_process, save_function=accelerator.save
+            )
+        else:  # HeadModelWithAction (action-conditioned) has no save_pretrained
+            accelerator.save_state(os.path.join(args.output_dir, "final_state"))
 
 
 if __name__ == "__main__":
