@@ -183,6 +183,7 @@ DATASET_NAMED_MIXES = {
     "robonet": [("robo_net", 1.0)],
     "tfds_robonet": [("tfds_robonet", 1.0)],
     "bair": [("bair_robot_pushing", 1.0)],
+    "nwm_scene": [("nwm_scene", 1.0)],
     "vp2_robodesk": [("vp2_robodesk", 1.0)],
     "vp2_robosuite": [("vp2_robosuite", 1.0)],
     "select": OXE_SELECT,
