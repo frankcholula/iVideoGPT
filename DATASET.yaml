@@ -4,3 +4,4 @@ robonet_train_dataset: /dev/null/train
 robonet_test_dataset: /dev/null/test
 robodesk_dataset: /dev/null
 robosuite_dataset: /dev/null
+nwm_scene_dataset: /mnt/Data/nwm-baselines/ivideogpt/nwm_scene
