@@ -18,4 +18,5 @@ accelerate launch --num_processes=1 --mixed_precision=bf16 train_gpt.py \
     --use_eval_dataset --use_fvd --use_frame_metrics \
     --weight_decay 0.01 --llama_attn_drop 0.1 --embed_no_wd \
     --checkpointing_steps 5000 \
-    --max_train_steps $STEPS
+    --max_train_steps $STEPS \
+    "$@"

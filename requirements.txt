@@ -5,7 +5,8 @@ tensorflow-datasets==4.9.3
 transformers==4.38.2
 diffusers==0.27.0
 imageio==2.9.0
-imageio-ffmpeg==0.4.4# pins for py3.9 env reproducibility (2026-08: newer versions break released code)
+imageio-ffmpeg==0.4.4
+# pins for py3.9 env reproducibility (2026-08: newer versions break released code)
 huggingface_hub==0.25.2
 numpy==1.26.4
 accelerate==0.28.0

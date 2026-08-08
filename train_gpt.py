@@ -236,6 +236,8 @@ def parse_args():
                         help="If the training should continue from a checkpoint folder.")
     parser.add_argument("--with_tracking", type=bool, default=True,
                         help="Whether to enable experiment trackers for logging.")
+    parser.add_argument("--tracker_project_name", type=str, default="clm_no_trainer",
+                        help="The project name for the trackers (e.g. wandb).")
     parser.add_argument("--report_to", type=str, default="tensorboard",
                         help=(
                             'The integration to report the results and logs to. Supported platforms are `"tensorboard"`,'
@@ -686,7 +688,7 @@ def start_train():
         experiment_config = vars(args)
         # TensorBoard cannot log Enums, need the raw value
         experiment_config["lr_scheduler_type"] = experiment_config["lr_scheduler_type"].value
-        accelerator.init_trackers("clm_no_trainer", experiment_config)
+        accelerator.init_trackers(args.tracker_project_name, experiment_config)
 
     # Train!
     total_batch_size = args.per_device_train_batch_size * accelerator.num_processes * args.gradient_accumulation_steps
