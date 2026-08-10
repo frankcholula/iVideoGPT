@@ -11,4 +11,5 @@ accelerate launch --num_processes=1 --mixed_precision=bf16 train_tokenizer.py \
     --rand_select --video_stepsize 1 --segment_horizon 16 --segment_length 8 --context_length 1 \
     --pretrained_model_name_or_path pretrained_models/ivideogpt-oxe-64-act-free/tokenizer \
     --checkpointing_steps 5000 \
-    --max_train_steps $STEPS
+    --max_train_steps $STEPS \
+    "$@"
