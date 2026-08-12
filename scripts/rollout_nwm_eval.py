@@ -19,7 +19,9 @@ from ivideogpt.transformer import HeadModelWithAction
 from ivideogpt.vq_model import CompressiveVQModel
 
 EVAL_DIR = os.environ.get("NWM_EVAL_DIR", "/mnt/Data/nwm-baselines/ogb_scene_ep_eval")
-TOKENIZER = os.path.join(REPO, "log_vqgan/2026-08-05-12:51:49-nwm_scene_tokenizer_ft/checkpoint-50005/unwrapped_model")
+VIEW_IDX = int(os.environ.get("NWM_VIEW_IDX", "0"))  # view-axis index within the export
+TOKENIZER = os.environ.get("NWM_TOKENIZER") or os.path.join(
+    REPO, "log_vqgan/2026-08-05-12:51:49-nwm_scene_tokenizer_ft/checkpoint-50005/unwrapped_model")
 CTX, SEG, TPD = 1, 16, 16
 
 
@@ -84,7 +86,7 @@ def main():
     device = "cuda"
     eps = sorted(glob.glob(os.path.join(EVAL_DIR, "ep*.npz")))[: a.limit]
     assert eps, f"no episodes in {EVAL_DIR}"
-    ckpt = a.ckpt or newest_ckpt()
+    ckpt = a.ckpt or os.environ.get("NWM_CKPT") or newest_ckpt()
     print(f"episodes={len(eps)} ckpt={ckpt}", flush=True)
 
     vq = CompressiveVQModel.from_pretrained(
@@ -99,7 +101,7 @@ def main():
         t0 = (i * 37) % (201 - 68)
         torch.manual_seed(i)
         d = np.load(ep)
-        frames = down64(d["frames"][t0:t0 + 68, 0]).to(device)
+        frames = down64(d["frames"][t0:t0 + 68, VIEW_IDX]).to(device)
         ctx, gt = frames[3:4].unsqueeze(0), frames[4:].unsqueeze(0)
         acts = d["actions"][t0 + 3:t0 + 67]
         with torch.autocast("cuda", torch.bfloat16):
