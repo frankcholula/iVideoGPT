@@ -100,7 +100,7 @@ def get_dataloaders(args):
         load_action=args.action_conditioned,
     )
     if args.use_eval_dataset:
-        assert len(DATASET_NAMED_MIXES[args.oxe_data_mixes_type]) == 1
+        # multi-dataset mixes eval on the first entry (nwm_scene_all -> nwm_scene/v2)
         eval_dataloader = EvalDataLoader(
             dataset_name=DATASET_NAMED_MIXES[args.oxe_data_mixes_type][0][0],
             batch_size=args.per_device_eval_batch_size,
